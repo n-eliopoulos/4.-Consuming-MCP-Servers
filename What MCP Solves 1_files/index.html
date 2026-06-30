@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782856800/dILyPNTi-z74cr9Achha8w/scorm/7cc4ddc5743a3f75cafcfd7dafeeea862705b31f375ae0331e23eabe0e37c65e/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consuming MCP Servers</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Consuming MCP Servers</h1><span class="module-label">Module 1: What MCP Solves</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="3"><div class="player-progress-fill" style="width: 3%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="integration-problem">
+  <h2>The Integration Problem</h2>
+
+  <p>Every AI tool integration today is bespoke: custom schemas, custom auth, custom error handling. If you have <strong>N models</strong> and <strong>M tools</strong>, you need <strong>N × M</strong> integrations. Each one is hand-coded, tested independently, and maintained separately.</p>
+
+  <aside class="callout">
+    <strong>The math:</strong> 3 models × 10 tools = 30 custom integrations. Add one model → 10 more integrations. Add one tool → 3 more integrations. This doesn't scale.
+  </aside>
+
+  <h3>What this looks like at FINRA</h3>
+  <p>Consider the integration surface for AI systems at a financial services organization:</p>
+  <ul>
+    <li>Market data feeds (real-time quotes, historical prices, indices)</li>
+    <li>Compliance checking systems (rule lookups, trade surveillance)</li>
+    <li>Analytics engines (SQL queries, report generation)</li>
+    <li>Document repositories (regulatory filings, internal policies)</li>
+  </ul>
+  <p>Each of these has its own API, authentication scheme, error format, and data model. Every AI application that needs these capabilities must integrate with each one individually.</p>
+
+  <h3>MCP reduces N × M to N + M</h3>
+  <p>The Model Context Protocol introduces a <strong>standard interface</strong> between AI applications and external systems. Instead of every model integrating with every tool directly, each model implements one MCP client and each tool exposes one MCP server. The protocol handles discovery, invocation, and error handling uniformly.</p>
+
+  <aside class="key-takeaway">
+    MCP is the USB-C of AI integrations: one standard connector instead of a drawer full of proprietary cables. The value compounds as the number of models and tools grows.
+  </aside>
+
+  <h3>Go deeper</h3>
+  <p>Mahesh Murag of Anthropic walks through MCP's architecture and how it solves the integration problem:</p>
+  <div class="video-embed">
+    <iframe src="./kQmXtrmQ5Zg.html" title="Building Agents with Model Context Protocol — Anthropic Workshop" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" loading="lazy"></iframe>
+  </div>
+</section>
+</div></main><footer class="player-footer"><button class="btn" disabled="">← Previous</button><span class="player-counter">Slide 1 of 7</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

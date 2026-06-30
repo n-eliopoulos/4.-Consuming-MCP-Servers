@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782856800/dILyPNTi-z74cr9Achha8w/scorm/7cc4ddc5743a3f75cafcfd7dafeeea862705b31f375ae0331e23eabe0e37c65e/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consuming MCP Servers</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Consuming MCP Servers</h1><span class="module-label">Module 2: Connecting to MCP Servers</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="32"><div class="player-progress-fill" style="width: 32%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="listing-tools">
+  <h2>Listing Tools</h2>
+
+  <p><code>tools/list</code> returns an array of tool definitions. Each tool has three fields that matter:</p>
+
+  <ul>
+    <li><strong><code>name</code></strong> — The identifier used to invoke the tool (e.g., <code>get_stock_quote</code>)</li>
+    <li><strong><code>description</code></strong> — What the LLM reads to decide when to use the tool. This is <em>prompt engineering for tools</em> — a vague description means the LLM won't know when to call it.</li>
+    <li><strong><code>inputSchema</code></strong> — JSON Schema defining the tool's parameters. The LLM uses this to construct valid arguments.</li>
+  </ul>
+
+  <pre><code>{
+  "name": "get_stock_quote",
+  "description": "Get the current price, volume, and change for a stock ticker symbol. Returns real-time market data.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "ticker": {"type": "string", "description": "Stock ticker symbol (e.g., AAPL, MSFT)"}
+    },
+    "required": ["ticker"]
+  }
+}</code></pre>
+
+  <aside class="callout">
+    <strong>Tool descriptions are critical.</strong> The LLM decides which tool to call based on the description. A description like "does stuff with stocks" will fail. A description like "Get the current price, volume, and change for a stock ticker symbol" tells the LLM exactly when this tool is useful.
+  </aside>
+
+  <aside class="key-takeaway">
+    Open the sandbox to connect to the simulated market-data server, list its tools, and examine how descriptions and schemas guide LLM tool selection.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: Listing Tools</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 3 of 8</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

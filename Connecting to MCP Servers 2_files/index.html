@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782856800/dILyPNTi-z74cr9Achha8w/scorm/7cc4ddc5743a3f75cafcfd7dafeeea862705b31f375ae0331e23eabe0e37c65e/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consuming MCP Servers</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Consuming MCP Servers</h1><span class="module-label">Module 2: Connecting to MCP Servers</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="29"><div class="player-progress-fill" style="width: 29%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="server-discovery">
+  <h2>Server Discovery</h2>
+
+  <p>In production, MCP clients find servers through <strong>configuration files</strong>, not hardcoded addresses. The standard format is <code>mcp.json</code>.</p>
+
+  <h3>The mcp.json format</h3>
+  <pre><code>{
+  "servers": {
+    "market-data": {
+      "transport": "stdio",
+      "command": "python",
+      "args": ["-m", "mcp_market_data"],
+      "env": {"API_KEY": "${MARKET_DATA_KEY}"}
+    },
+    "compliance-docs": {
+      "transport": "sse",
+      "url": "https://compliance-mcp.internal.finra.org/sse",
+      "env": {"API_KEY": "${COMPLIANCE_KEY}"}
+    }
+  }
+}</code></pre>
+
+  <p>Each server entry specifies:</p>
+  <ul>
+    <li><strong>transport</strong> — <code>stdio</code> (local process) or <code>sse</code> (remote HTTP+SSE)</li>
+    <li><strong>command/args</strong> — for stdio: the command to launch the server process</li>
+    <li><strong>url</strong> — for SSE: the server's endpoint</li>
+    <li><strong>env</strong> — environment variables (API keys, config) passed to the server</li>
+  </ul>
+
+  <aside class="callout">
+    <strong>Alternative considered:</strong> Hardcode the MCP server command or URL directly in your agent code. This works for one server in one environment and breaks the moment you have a second environment (dev vs. prod), a server moves, or a different team needs to discover the same server. The config file decouples agent code from infrastructure topology, so every team can change their server's location without touching consumers. Hardcoding is acceptable only for a throwaway prototype with one server you control end-to-end.
+  </aside>
+
+  <aside class="key-takeaway">
+    Open the sandbox to load an <code>mcp.json</code> config with 3 servers, connect to each, and print their capabilities. This is the discovery pattern you'll use in every MCP application.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: Server Discovery</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 2 of 8</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

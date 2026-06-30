@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782856800/dILyPNTi-z74cr9Achha8w/scorm/7cc4ddc5743a3f75cafcfd7dafeeea862705b31f375ae0331e23eabe0e37c65e/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consuming MCP Servers</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Consuming MCP Servers</h1><span class="module-label">Module 4: Security Boundaries</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="76"><div class="player-progress-fill" style="width: 76%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="authentication-authorization">
+  <h2>Authentication and Authorization</h2>
+
+  <p>The critical mental model: <strong>the server must enforce permissions, not the client</strong>. The client can lie. MCP supports transport-level authentication on top of this principle, but transport-level authentication is just the first checkpoint.</p>
+
+  <h3>Authentication mechanisms</h3>
+  <ul>
+    <li><strong>API keys</strong> — simplest approach, passed as environment variables or headers. Suitable for low-risk, internal service-to-service calls. No user context.</li>
+    <li><strong>OIDC bearer tokens</strong> — the production pattern at FINRA. The agent presents a token issued by FIP (FINRA Identity Provider) on the user's behalf. Carries user identity, AD group memberships, and scope claims. Every server call is auditable to a specific user.</li>
+    <li><strong>mTLS</strong> — mutual TLS for HTTP+SSE transport. Strongest transport-level auth for service-to-service traffic where no user identity needs to propagate.</li>
+  </ul>
+
+  <h3>Tool-level authorization</h3>
+  <p>Not all authenticated callers should access all tools. A client (or a user-on-whose-behalf the agent is acting) with a <code>market-data:read</code> scope should not be able to call <code>check_compliance</code> on the compliance server.</p>
+  <pre><code># Server-side authorization check (inside the MCP server)
+def handle_tool_call(tool_name, arguments, caller_scopes, caller_groups):
+    required_scope = TOOL_SCOPES[tool_name]      # e.g., "compliance:write"
+    required_group = TOOL_GROUPS.get(tool_name)  # e.g., "FINRA_COMPLIANCE_OFFICERS"
+    if required_scope not in caller_scopes:
+        return error(-32001, f"Unauthorized: requires {required_scope}")
+    if required_group and required_group not in caller_groups:
+        return error(-32001, f"Unauthorized: requires AD group {required_group}")
+    return execute_tool(tool_name, arguments)</code></pre>
+
+  <p>For FINRA deployments the <code>caller_scopes</code> and <code>caller_groups</code> come from the OIDC token. Token validation, scope extraction, and group propagation are deeper topics — covered next in this module and in <em>Building MCP Servers</em> (Track 4 Level 200).</p>
+
+  <aside class="callout">
+    <strong>Server-side enforcement is non-negotiable.</strong> The MCP client is code running on someone else's machine. It can be modified, spoofed, or compromised. The server must validate every request independently — including verifying the token signature, not just trusting the headers.
+  </aside>
+
+  <aside class="key-takeaway">
+    Open the sandbox to connect to a server with and without API keys, and try invoking a tool your key doesn't authorize. Observe the difference between authentication failures and authorization failures.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: Authentication and Authorization</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 2 of 8</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

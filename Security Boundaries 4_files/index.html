@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782856800/dILyPNTi-z74cr9Achha8w/scorm/7cc4ddc5743a3f75cafcfd7dafeeea862705b31f375ae0331e23eabe0e37c65e/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consuming MCP Servers</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Consuming MCP Servers</h1><span class="module-label">Module 4: Security Boundaries</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="82"><div class="player-progress-fill" style="width: 82%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="data-boundary-analysis">
+  <h2>Data Boundary Analysis</h2>
+
+  <p>Trace the data flow through an MCP-powered agent to identify every point where sensitive data is exposed:</p>
+
+  <h3>The full data chain</h3>
+  <pre><code>User query → LLM → tool call arguments → MCP server → external system
+                                                          ↓
+User ← LLM ← tool result ← MCP server ← external system response</code></pre>
+
+  <h3>Exposure points</h3>
+  <table>
+    <thead><tr><th>Hop</th><th>Data at risk</th><th>Control</th></tr></thead>
+    <tbody>
+      <tr><td>User → LLM</td><td>User query may contain PII</td><td>Input sanitization</td></tr>
+      <tr><td>LLM → Tool args</td><td>LLM may include PII in tool arguments</td><td>Argument validation</td></tr>
+      <tr><td>Tool args → Server</td><td>Arguments cross trust boundary</td><td>Transport encryption (TLS)</td></tr>
+      <tr><td>Server → External</td><td>Server queries may expose scope</td><td>Least privilege access</td></tr>
+      <tr><td>External → Server</td><td>Response may contain sensitive data</td><td>Response filtering</td></tr>
+      <tr><td>Server → LLM</td><td>Tool result crosses trust boundary</td><td>Transport encryption</td></tr>
+      <tr><td>LLM → User</td><td>LLM may surface sensitive data</td><td>Output filtering</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Logging considerations</h3>
+  <p>Every hop is a potential logging point. In financial services, you must log enough for audit trails but <strong>never log PII, credentials, or sensitive financial data</strong>. Log the tool name and sanitized arguments — not the raw content.</p>
+
+  <aside class="key-takeaway">
+    Every hop in the MCP data chain is a potential data leak. For each integration, trace the full chain and identify what sensitive data is visible at each point.
+  </aside>
+</section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 4 of 8</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

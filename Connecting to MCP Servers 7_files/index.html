@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782856800/dILyPNTi-z74cr9Achha8w/scorm/7cc4ddc5743a3f75cafcfd7dafeeea862705b31f375ae0331e23eabe0e37c65e/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consuming MCP Servers</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Consuming MCP Servers</h1><span class="module-label">Module 2: Connecting to MCP Servers</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="44"><div class="player-progress-fill" style="width: 44%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="error-handling">
+  <h2>Error Handling and Timeouts</h2>
+
+  <p>Production MCP clients must handle four categories of failure:</p>
+
+  <h3>1. Transport errors</h3>
+  <p>Server unreachable, network timeout, connection refused. The client can't communicate with the server at all.</p>
+
+  <h3>2. Protocol errors</h3>
+  <p>Invalid JSON-RPC messages, unsupported methods, malformed requests. The server received the message but can't process it.</p>
+
+  <h3>3. Tool errors</h3>
+  <p>The tool executed but failed at its task. Response has <code>isError: true</code> with a descriptive message. Example: invalid ticker symbol, unauthorized access.</p>
+
+  <h3>4. Timeouts</h3>
+  <p>The server is reachable but takes too long to respond. Set timeouts per-tool based on expected latency.</p>
+
+  <h3>Graceful degradation</h3>
+  <p>If a server is down, the agent should <strong>continue with reduced capabilities</strong>, not crash. Log the failure, remove the server's tools from the available set, and inform the LLM that certain capabilities are unavailable.</p>
+
+  <pre><code>try:
+    client.initialize()
+except ConnectionError:
+    print(f"Server {server_name} unavailable — continuing without it")
+    # Remove this server's tools from the agent's tool set
+    # The agent continues with remaining servers</code></pre>
+
+  <aside class="key-takeaway">
+    Open the sandbox to connect to 3 servers where one is down. Handle the connection error, continue with the 2 healthy servers, and invoke a tool that returns an error — all handled gracefully.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: Error Handling and Timeouts</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 7 of 8</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782856800/dILyPNTi-z74cr9Achha8w/scorm/7cc4ddc5743a3f75cafcfd7dafeeea862705b31f375ae0331e23eabe0e37c65e/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consuming MCP Servers</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Consuming MCP Servers</h1><span class="module-label">Module 2: Connecting to MCP Servers</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="41"><div class="player-progress-fill" style="width: 41%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="agent-loop-integration">
+  <h2>Handling Responses in Agent Loops</h2>
+
+  <p>MCP tool results feed back into the LLM conversation. This is the core integration pattern: the LLM decides to call a tool, the MCP client executes it, and the result goes back to the LLM as a tool result message.</p>
+
+  <h3>The pattern</h3>
+  <ol>
+    <li>User sends a message to the LLM</li>
+    <li>LLM responds with a <strong>tool_use</strong> block (tool name + arguments)</li>
+    <li>Agent extracts the tool call and invokes it via <code>MCPClient</code></li>
+    <li>Tool result is sent back to the LLM as a <strong>tool_result</strong> message</li>
+    <li>LLM generates a final response incorporating the tool result</li>
+  </ol>
+
+  <pre><code>from ai_shim import ChatClient, MCPClient
+
+chat = ChatClient(model="claude-sonnet")
+mcp = MCPClient(server="market-data")
+mcp.initialize()
+
+messages = [{"role": "user", "content": "What's the current price of AAPL?"}]
+response = chat.send(messages=messages, tools=mcp.list_tools())
+
+if response.tool_calls:
+    tool_call = response.tool_calls[0]
+    result = mcp.call_tool(tool_call.name, tool_call.arguments)
+    messages.append(response.to_message())
+    messages.append({"role": "tool", "tool_use_id": tool_call.id, "content": result.text()})
+    final = chat.send(messages=messages)
+    print(final.text)</code></pre>
+
+  <aside class="key-takeaway">
+    Open the sandbox to build a minimal agent loop. The <code>ChatClient</code> generates a tool call, the <code>MCPClient</code> executes it, and the result feeds back for a final response.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: Handling Responses in Agent Loops</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 6 of 8</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

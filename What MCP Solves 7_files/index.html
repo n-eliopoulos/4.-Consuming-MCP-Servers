@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782856800/dILyPNTi-z74cr9Achha8w/scorm/7cc4ddc5743a3f75cafcfd7dafeeea862705b31f375ae0331e23eabe0e37c65e/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consuming MCP Servers</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Consuming MCP Servers</h1><span class="module-label">Module 1: What MCP Solves</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="21"><div class="player-progress-fill" style="width: 21%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="mcp-vs-direct-exercise">
+  <h2>Exercise: MCP vs. Direct Integration</h2>
+
+  <p>Apply the decision framework to four integration scenarios. For each, recommend MCP or direct integration and justify your choice with a trade-off analysis.</p>
+
+  <h3>Instructions</h3>
+  <ol>
+    <li>Open the sandbox below.</li>
+    <li>For each of the 4 scenarios, call <code>evaluate_scenario()</code> with the scenario number, your recommendation (<code>"mcp"</code> or <code>"direct"</code>), and your justification.</li>
+    <li>Your justification should address at least one relevant criterion from the decision framework (composability, discovery, reuse, performance, simplicity).</li>
+  </ol>
+
+  <h3>Scenarios</h3>
+  <ol>
+    <li><strong>Single internal API:</strong> A Python script that calls one internal REST API to fetch daily trade counts. Used by one team, one application.</li>
+    <li><strong>Multi-tool agent:</strong> An AI assistant for compliance officers that needs access to rule lookups, trade surveillance, market data, and document search.</li>
+    <li><strong>Compliance checking pipeline:</strong> A batch process that checks 10,000 trades per hour against compliance rules. Latency budget: 50ms per trade.</li>
+    <li><strong>Ad-hoc data exploration:</strong> An analyst's AI assistant that connects to whatever data sources are relevant to the current question. Data sources change weekly.</li>
+  </ol>
+
+  <aside class="callout">
+    <strong>Grading:</strong> Recommendation is binary (right or wrong). Justification is checked for mention of relevant trade-off criteria. You need at least 3 of 4 correct to pass.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: Exercise: MCP vs. Direct Integration</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 7 of 7</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

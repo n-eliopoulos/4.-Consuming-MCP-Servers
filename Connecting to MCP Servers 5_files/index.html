@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782856800/dILyPNTi-z74cr9Achha8w/scorm/7cc4ddc5743a3f75cafcfd7dafeeea862705b31f375ae0331e23eabe0e37c65e/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consuming MCP Servers</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Consuming MCP Servers</h1><span class="module-label">Module 2: Connecting to MCP Servers</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="38"><div class="player-progress-fill" style="width: 38%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="resources-and-prompts">
+  <h2>Resources and Prompts</h2>
+
+  <p>Tools are the most common MCP capability, but resources and prompts complete the picture.</p>
+
+  <h3>Resources</h3>
+  <p>Resources are read-only data identified by URI. Use <code>resources/list</code> to discover them and <code>resources/read</code> to fetch content.</p>
+  <pre><code># List available resources
+resources = client.list_resources()
+# [{"uri": "compliance://rules/3110", "name": "FINRA Rule 3110", "mimeType": "text/plain"}, ...]
+
+# Read a specific resource
+content = client.read_resource("compliance://rules/3110")
+# Returns the full text of the resource</code></pre>
+
+  <h3>Prompts</h3>
+  <p>Prompts are reusable templates with arguments. Use <code>prompts/list</code> to discover them and <code>prompts/get</code> to retrieve a filled-in template.</p>
+  <pre><code># List available prompts
+prompts = client.list_prompts()
+# [{"name": "analyze-trade-compliance", "arguments": [{"name": "trade_id", "required": true}, ...]}]
+
+# Get a prompt with arguments filled in
+prompt = client.get_prompt("analyze-trade-compliance", {"trade_id": "T-2024-0847", "rule": "3110"})
+# Returns the complete prompt text with arguments substituted</code></pre>
+
+  <h3>When to use each</h3>
+  <table>
+    <thead><tr><th>Capability</th><th>Use when</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td>Tool</td><td>The model needs to <em>do</em> something</td><td>Check compliance, run a query</td></tr>
+      <tr><td>Resource</td><td>The model needs to <em>read</em> something</td><td>Fetch a rule, get a report</td></tr>
+      <tr><td>Prompt</td><td>You want a <em>structured template</em></td><td>Standard analysis format</td></tr>
+    </tbody>
+  </table>
+
+  <aside class="key-takeaway">
+    Open the sandbox to list resources from the compliance-docs server, read a specific resource, then retrieve a prompt template with arguments filled in.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: Resources and Prompts</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 5 of 8</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

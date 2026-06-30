@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782856800/dILyPNTi-z74cr9Achha8w/scorm/7cc4ddc5743a3f75cafcfd7dafeeea862705b31f375ae0331e23eabe0e37c65e/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consuming MCP Servers</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Consuming MCP Servers</h1><span class="module-label">Module 1: What MCP Solves</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="6"><div class="player-progress-fill" style="width: 6%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="what-is-mcp">
+  <h2>What Is MCP?</h2>
+
+  <p><strong>Model Context Protocol (MCP)</strong> defines a uniform way for AI models to discover, invoke, and receive results from external capabilities. It is an open standard created by Anthropic that connects AI applications to external tools and data sources.</p>
+
+  <h3>Three capability types</h3>
+  <p>Every MCP server exposes capabilities in one or more of these categories:</p>
+
+  <aside class="callout">
+    <strong>Mental model:</strong> Tools are verbs (do something). Resources are nouns (read something). Prompts are templates (structure something).
+  </aside>
+
+  <ol>
+    <li><strong>Tools</strong> — Actions the model can invoke. Examples: <code>get_stock_quote</code>, <code>check_compliance</code>, <code>run_query</code>. Tools take parameters and return results. They are the most common capability type.</li>
+    <li><strong>Resources</strong> — Data the model can read. Identified by URI (e.g., <code>market://indices/current</code>). Resources are read-only data sources: files, database records, API responses. Think of them as "things the model can look at."</li>
+    <li><strong>Prompts</strong> — Reusable prompt templates with arguments. A server can expose pre-built prompt templates that clients fill in with specific values. Example: an <code>analyze-trade-compliance</code> template that takes trade details as arguments.</li>
+  </ol>
+
+  <aside class="callout">
+    <strong>Note:</strong> MCP capability discovery happens at connection time. A server that changes its tool list after initialization without a re-discovery cycle will cause the client to call tools that no longer exist.
+  </aside>
+
+  <h3>Why an open standard matters</h3>
+  <p>Before MCP, every framework had its own tool-calling format. LangChain tools, LlamaIndex tools, and Strands tools were all incompatible. MCP provides a single protocol that any client and any server can implement, regardless of framework or language.</p>
+
+  <aside class="key-takeaway">
+    MCP's three capability types — tools, resources, and prompts — are the vocabulary you'll use for the rest of this course. Every MCP interaction maps to one of these three.
+  </aside>
+</section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 2 of 7</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

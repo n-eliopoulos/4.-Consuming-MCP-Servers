@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782856800/dILyPNTi-z74cr9Achha8w/scorm/7cc4ddc5743a3f75cafcfd7dafeeea862705b31f375ae0331e23eabe0e37c65e/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consuming MCP Servers</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Consuming MCP Servers</h1><span class="module-label">Module 2: Connecting to MCP Servers</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="26"><div class="player-progress-fill" style="width: 26%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="mcp-client-setup">
+  <h2>MCP Client Setup</h2>
+
+  <p>The <code>ai_shim</code> module provides <code>MCPClient</code>, which mirrors the real MCP SDK's client interface. The simulated client uses the same JSON-RPC 2.0 message format as production MCP, so the code patterns you learn here map directly to real usage.</p>
+
+  <h3>The initialization handshake</h3>
+  <p>Creating a client and connecting to a server involves a mandatory handshake:</p>
+  <ol>
+    <li>Create an <code>MCPClient</code> pointing at a server name</li>
+    <li>Call <code>initialize()</code> — the client sends its protocol version and capabilities</li>
+    <li>The server responds with its own capabilities (which of tools/resources/prompts it supports)</li>
+    <li>The connection is now ready for use</li>
+  </ol>
+
+  <pre><code>from ai_shim import MCPClient
+
+client = MCPClient(server="market-data")
+info = client.initialize()
+print(f"Server: {info['name']}")
+print(f"Capabilities: {list(info['capabilities'].keys())}")</code></pre>
+
+  <aside class="callout">
+    <strong>Why initialize matters:</strong> Not all servers support all capability types. A market-data server might expose tools and resources but no prompts. The initialization handshake tells you what's available before you try to use it.
+  </aside>
+
+  <aside class="key-takeaway">
+    Open the sandbox to create your first MCP client connection. Run the 6-line script and inspect the server's capability response.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: MCP Client Setup</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 1 of 8</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

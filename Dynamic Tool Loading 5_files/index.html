@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782856800/dILyPNTi-z74cr9Achha8w/scorm/7cc4ddc5743a3f75cafcfd7dafeeea862705b31f375ae0331e23eabe0e37c65e/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consuming MCP Servers</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Consuming MCP Servers</h1><span class="module-label">Module 3: Dynamic Tool Loading</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="65"><div class="player-progress-fill" style="width: 65%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="capability-changes">
+  <h2>Adapting to Capability Changes</h2>
+
+  <p>Servers can come and go. Tools can be added or removed. A production agent must handle these changes without crashing.</p>
+
+  <h3>Periodic re-discovery</h3>
+  <p>Refresh the tool registry on a schedule or when errors occur:</p>
+  <pre><code>def refresh_registry(servers, registry, clients):
+    """Re-discover tools from all servers, handling failures."""
+    for name in servers:
+        try:
+            client = MCPClient(server=name)
+            client.initialize()
+            clients[name] = client
+            for tool in client.list_tools():
+                registry[tool["name"]] = {"server": name, ...}
+        except ConnectionError:
+            # Remove tools from this server
+            for tool_name in list(registry):
+                if registry[tool_name]["server"] == name:
+                    del registry[tool_name]
+            clients.pop(name, None)</code></pre>
+
+  <h3>Handling tool-not-found</h3>
+  <p>If the LLM requests a tool that disappeared (server went offline), return a clear error and let the LLM retry with available tools:</p>
+  <pre><code>if tool_name not in registry:
+    return f"Tool '{tool_name}' is no longer available. Available tools: {list(registry.keys())}"</code></pre>
+
+  <aside class="key-takeaway">
+    Open the sandbox to see an agent handle a server going offline mid-conversation. The agent detects the failure, refreshes its registry, and the LLM adapts its approach using remaining tools.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: Adapting to Capability Changes</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 5 of 6</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

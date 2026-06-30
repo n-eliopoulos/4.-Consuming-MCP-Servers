@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782856800/dILyPNTi-z74cr9Achha8w/scorm/7cc4ddc5743a3f75cafcfd7dafeeea862705b31f375ae0331e23eabe0e37c65e/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consuming MCP Servers</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Consuming MCP Servers</h1><span class="module-label">Module 3: Dynamic Tool Loading</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="56"><div class="player-progress-fill" style="width: 56%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="tool-registry">
+  <h2>Building a Tool Registry</h2>
+
+  <p>At startup, the agent connects to all configured MCP servers, collects tool definitions, and builds a unified mapping — the <strong>tool registry</strong> — that becomes the central data structure for dynamic tool loading. Without this single mapping, name collisions across servers (two servers both exposing <code>get_customer_data</code>) produce inconsistent routing, so the registry must resolve them before any tool gets called.</p>
+
+  <h3>The registry pattern</h3>
+  <pre><code># Registry structure: tool_name → {server, schema, description}
+{
+  "get_stock_quote":    {"server": "market-data",     "schema": {...}, "description": "..."},
+  "check_compliance":   {"server": "compliance-docs", "schema": {...}, "description": "..."},
+  "run_query":          {"server": "analytics",       "schema": {...}, "description": "..."},
+}</code></pre>
+
+  <p>The registry serves two purposes:</p>
+  <ol>
+    <li><strong>For the LLM:</strong> Provides the complete list of available tools with descriptions and schemas</li>
+    <li><strong>For the agent:</strong> Maps tool names back to the server that owns them, enabling correct routing of tool calls</li>
+  </ol>
+
+  <aside class="callout">
+    <strong>Name collisions:</strong> If two servers expose a tool with the same name, the registry must handle it — typically by prefixing with the server name (e.g., <code>market-data.get_report</code> vs. <code>analytics.get_report</code>).
+  </aside>
+
+  <aside class="key-takeaway">
+    Open the sandbox to build a <code>ToolRegistry</code> class that connects to 3 simulated servers and aggregates all tools into a unified registry.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: Building a Tool Registry</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 2 of 6</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

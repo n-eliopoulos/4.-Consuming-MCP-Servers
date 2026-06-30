@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782856800/dILyPNTi-z74cr9Achha8w/scorm/7cc4ddc5743a3f75cafcfd7dafeeea862705b31f375ae0331e23eabe0e37c65e/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consuming MCP Servers</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Consuming MCP Servers</h1><span class="module-label">Module 1: What MCP Solves</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="9"><div class="player-progress-fill" style="width: 9%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="mcp-architecture">
+  <h2>MCP Architecture</h2>
+
+  <p>MCP uses a <strong>client-server model</strong> with a clear separation of concerns at each layer.</p>
+
+  <h3>The five layers</h3>
+  <ol>
+    <li><strong>Host Application</strong> — The AI application the user interacts with (IDE, chatbot, agent). Hosts one or more MCP clients.</li>
+    <li><strong>MCP Client</strong> — Manages the connection to a single MCP server. Handles protocol lifecycle, capability discovery, and message routing.</li>
+    <li><strong>Transport</strong> — The communication channel. Two options: <strong>stdio</strong> (local servers, stdin/stdout) or <strong>HTTP+SSE</strong> (remote servers, Server-Sent Events for streaming).</li>
+    <li><strong>MCP Server</strong> — Exposes tools, resources, and/or prompts. Implements the MCP protocol. Translates between MCP messages and the external system's native API.</li>
+    <li><strong>External System</strong> — The actual data source or service: a database, API, file system, or third-party service.</li>
+  </ol>
+
+  <h3>The lifecycle</h3>
+  <pre><code>Client                          Server
+  │                               │
+  │── initialize ────────────────►│  Protocol version + capabilities
+  │◄── initialize response ───────│  Server capabilities
+  │                               │
+  │── tools/list ────────────────►│  Discover available tools
+  │◄── tools list ────────────────│  Tool definitions
+  │                               │
+  │── tools/call ────────────────►│  Invoke a tool
+  │◄── tool result ───────────────│  Result content
+  │                               │
+  │── shutdown ──────────────────►│  Clean disconnect
+  │                               │</code></pre>
+
+  <p>The <code>initialize</code> handshake is mandatory. The client declares its protocol version and capabilities; the server responds with its own. This ensures both sides agree on what's supported before any work begins. If version negotiation fails, the connection must close. Attempting to proceed with a mismatched protocol version produces behavior neither side can predict.</p>
+
+  <aside class="key-takeaway">
+    One host application can have multiple MCP clients, each connected to a different MCP server. This is how a single agent can access market data, compliance tools, and analytics simultaneously.
+  </aside>
+</section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 3 of 7</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782856800/dILyPNTi-z74cr9Achha8w/scorm/7cc4ddc5743a3f75cafcfd7dafeeea862705b31f375ae0331e23eabe0e37c65e/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consuming MCP Servers</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Consuming MCP Servers</h1><span class="module-label">Module 3: Dynamic Tool Loading</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="53"><div class="player-progress-fill" style="width: 53%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="static-vs-dynamic">
+  <h2>Static vs. Dynamic Tool Lists</h2>
+
+  <p>Most agent tutorials hardcode tool definitions in the system prompt. This works for demos but breaks in production.</p>
+
+  <h3>Static tool lists</h3>
+  <ul>
+    <li>Tools are defined at <strong>compile time</strong> in the agent's code or config</li>
+    <li>Add a new tool → redeploy the agent</li>
+    <li>Remove a tool → redeploy the agent</li>
+    <li>Simple, predictable, but <strong>brittle</strong></li>
+  </ul>
+
+  <h3>Dynamic tool lists</h3>
+  <ul>
+    <li>Tools are discovered at <strong>runtime</strong> from MCP servers</li>
+    <li>Add a new MCP server → agent picks up its tools automatically</li>
+    <li>Remove a server → agent adapts without redeployment</li>
+    <li>More complex, but <strong>resilient and composable</strong></li>
+  </ul>
+
+  <h3>Why dynamic matters at scale</h3>
+  <p>In an enterprise environment, the set of available tools changes frequently:</p>
+  <ul>
+    <li>New compliance rules require new checking tools</li>
+    <li>Market data providers change or add feeds</li>
+    <li>Internal systems are upgraded or replaced</li>
+    <li>Different teams expose new capabilities as MCP servers</li>
+  </ul>
+  <p>With static tool lists, every change requires a coordinated redeployment. With dynamic discovery, the agent adapts automatically.</p>
+
+  <aside class="key-takeaway">
+    Dynamic tool loading is the architectural payoff of MCP. The protocol's discovery mechanism (<code>tools/list</code>) makes it possible to build agents that adapt to their environment at runtime.
+  </aside>
+</section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 1 of 6</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

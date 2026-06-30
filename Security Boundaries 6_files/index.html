@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782856800/dILyPNTi-z74cr9Achha8w/scorm/7cc4ddc5743a3f75cafcfd7dafeeea862705b31f375ae0331e23eabe0e37c65e/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consuming MCP Servers</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Consuming MCP Servers</h1><span class="module-label">Module 4: Security Boundaries</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="88"><div class="player-progress-fill" style="width: 88%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="sandboxing-least-privilege">
+  <h2>Sandboxing and Least Privilege</h2>
+
+  <p>MCP servers should have <strong>minimal permissions</strong>. The principle: an MCP server compromise should have blast radius limited to its specific capability.</p>
+
+  <h3>Least privilege by server</h3>
+  <table>
+    <thead><tr><th>Server</th><th>Should have</th><th>Should NOT have</th></tr></thead>
+    <tbody>
+      <tr><td>market-data</td><td>Read access to market data APIs</td><td>Write access to trading systems</td></tr>
+      <tr><td>compliance-docs</td><td>Read access to rule database</td><td>Write access to enforcement actions</td></tr>
+      <tr><td>analytics</td><td>Read-only database connection</td><td>DDL permissions (CREATE, DROP)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Sandboxing patterns</h3>
+  <ul>
+    <li><strong>Network isolation:</strong> Each server can only reach the systems it needs</li>
+    <li><strong>Filesystem restrictions:</strong> No access to files outside the server's working directory</li>
+    <li><strong>Resource limits:</strong> CPU, memory, and timeout limits per tool invocation</li>
+    <li><strong>Read-only database connections:</strong> Analytics servers should never have write access</li>
+    <li><strong>Separate credentials:</strong> Each server gets its own API keys with minimal scopes</li>
+  </ul>
+
+  <aside class="callout">
+    <strong>Defense in depth:</strong> Assume any MCP server can be compromised. If the market-data server is compromised, the attacker should only be able to read market data — not access compliance systems, modify trades, or exfiltrate customer data.
+  </aside>
+
+  <aside class="key-takeaway">
+    Sandboxing is not about preventing bugs — it's about limiting the damage when something goes wrong. Every MCP server should be designed so that its compromise has the smallest possible blast radius.
+  </aside>
+</section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 6 of 8</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

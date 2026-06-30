@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782856800/dILyPNTi-z74cr9Achha8w/scorm/7cc4ddc5743a3f75cafcfd7dafeeea862705b31f375ae0331e23eabe0e37c65e/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consuming MCP Servers</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Consuming MCP Servers</h1><span class="module-label">Module 4: Security Boundaries</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="74"><div class="player-progress-fill" style="width: 74%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="mcp-trust-model">
+  <h2>The MCP Trust Model</h2>
+
+  <p>Every MCP connection crosses a <strong>trust boundary</strong>. Understanding where these boundaries are, what data crosses them, and what happens when one side is compromised is the foundation of MCP security — because the client cannot verify what the server does with data it receives, and the server cannot verify the client's identity without explicit authentication.</p>
+
+  <h3>Three trust boundaries</h3>
+  <ol>
+    <li><strong>Host ↔ Client:</strong> The host application trusts the MCP client it runs. This is an in-process boundary — the client is part of the host.</li>
+    <li><strong>Client ↔ Server:</strong> The client communicates with external MCP servers over a transport (stdio or HTTP+SSE). This is the primary security boundary. The server is external code that may be maintained by a different team or organization.</li>
+    <li><strong>Server ↔ External System:</strong> The MCP server accesses databases, APIs, or services. The server's permissions on the external system determine what it can do.</li>
+  </ol>
+
+  <h3>Trust levels at FINRA</h3>
+  <p>Not all servers are equal:</p>
+  <ul>
+    <li><strong>High trust:</strong> Internal compliance servers maintained by your team, running in your VPC</li>
+    <li><strong>Medium trust:</strong> Internal market data servers maintained by another team</li>
+    <li><strong>Low trust:</strong> Community MCP servers or third-party integrations</li>
+  </ul>
+
+  <aside class="callout">
+    <strong>Key principle:</strong> Each boundary is a trust decision. The client can't verify what the server does with the data it receives. The server can't verify that the client is who it claims to be without proper authentication. Security must be enforced at each boundary independently.
+  </aside>
+
+  <aside class="key-takeaway">
+    Frame security as boundary analysis, not a checklist. For every MCP connection, ask: what data crosses this boundary, who controls each side, and what happens if one side is compromised?
+  </aside>
+</section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 1 of 8</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

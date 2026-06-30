@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782856800/dILyPNTi-z74cr9Achha8w/scorm/7cc4ddc5743a3f75cafcfd7dafeeea862705b31f375ae0331e23eabe0e37c65e/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consuming MCP Servers</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Consuming MCP Servers</h1><span class="module-label">Module 1: What MCP Solves</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="12"><div class="player-progress-fill" style="width: 12%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="json-rpc-transport">
+  <h2>JSON-RPC 2.0 Transport</h2>
+
+  <p>MCP messages are <strong>JSON-RPC 2.0</strong>. Every request has a <code>jsonrpc</code> version, an <code>id</code>, a <code>method</code>, and optional <code>params</code>. Every response echoes the <code>id</code> and contains either a <code>result</code> or an <code>error</code>.</p>
+
+  <aside class="callout">
+    <strong>Note:</strong> Use the <code>id</code> field to match every response to its request. In concurrent tool-call scenarios, conflating responses from different requests is the most common source of incorrect tool results.
+  </aside>
+
+  <h3>Example: listing tools</h3>
+  <pre><code>// Request
+{"jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": {}}
+
+// Response
+{"jsonrpc": "2.0", "id": 1, "result": {
+  "tools": [
+    {"name": "get_stock_quote", "description": "Get current price for a ticker symbol",
+     "inputSchema": {"type": "object", "properties": {"ticker": {"type": "string"}}, "required": ["ticker"]}}
+  ]
+}}</code></pre>
+
+  <h3>Standard MCP methods</h3>
+  <table>
+    <thead><tr><th>Method</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><code>initialize</code></td><td>Handshake: exchange protocol version and capabilities</td></tr>
+      <tr><td><code>tools/list</code></td><td>List all available tools with schemas</td></tr>
+      <tr><td><code>tools/call</code></td><td>Invoke a tool with arguments</td></tr>
+      <tr><td><code>resources/list</code></td><td>List available resources</td></tr>
+      <tr><td><code>resources/read</code></td><td>Read a resource by URI</td></tr>
+      <tr><td><code>prompts/list</code></td><td>List available prompt templates</td></tr>
+      <tr><td><code>prompts/get</code></td><td>Get a prompt template with arguments filled in</td></tr>
+    </tbody>
+  </table>
+
+  <aside class="key-takeaway">
+    Open the sandbox to send JSON-RPC messages to a simulated MCP server. Click "List Tools" and inspect the raw request/response pair. Toggle between raw JSON and parsed view to see how the protocol works at the wire level.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: JSON-RPC 2.0 Transport</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 4 of 7</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

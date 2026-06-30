@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782856800/dILyPNTi-z74cr9Achha8w/scorm/7cc4ddc5743a3f75cafcfd7dafeeea862705b31f375ae0331e23eabe0e37c65e/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consuming MCP Servers</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Consuming MCP Servers</h1><span class="module-label">Module 1: What MCP Solves</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="15"><div class="player-progress-fill" style="width: 15%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="mcp-vs-direct">
+  <h2>Why MCP vs. Direct API Integration</h2>
+
+  <p>MCP is not always the right choice. Understanding the trade-offs helps you make the right architectural decision.</p>
+
+  <h3>Direct API integration</h3>
+  <ul>
+    <li><strong>Faster for one-off tools</strong> — no protocol overhead, no server to build</li>
+    <li><strong>Full control</strong> — custom error handling, custom retry logic, custom auth</li>
+    <li><strong>Tight coupling</strong> — changes to the API require changes to the client</li>
+  </ul>
+
+  <h3>MCP integration</h3>
+  <ul>
+    <li><strong>Standardized discovery</strong> — clients discover tools at runtime, not compile time</li>
+    <li><strong>Hot-swappable servers</strong> — add/remove capabilities without redeploying the agent</li>
+    <li><strong>Ecosystem reuse</strong> — community servers for common integrations (GitHub, Slack, databases)</li>
+    <li><strong>Consistent error handling</strong> — JSON-RPC error codes across all integrations</li>
+  </ul>
+
+  <h3>Decision framework</h3>
+  <table>
+    <thead><tr><th>Criterion</th><th>Favors MCP</th><th>Favors Direct</th></tr></thead>
+    <tbody>
+      <tr><td>Composability</td><td>Multi-tool agents, dynamic tool sets</td><td>Single-purpose integration</td></tr>
+      <tr><td>Discovery</td><td>Tools change over time</td><td>Fixed, known tool set</td></tr>
+      <tr><td>Reuse</td><td>Multiple apps use the same tools</td><td>One app, one tool</td></tr>
+      <tr><td>Performance</td><td>Acceptable latency budget</td><td>Sub-millisecond critical path</td></tr>
+      <tr><td>Simplicity</td><td>Standardized patterns</td><td>Minimal moving parts</td></tr>
+    </tbody>
+  </table>
+
+  <aside class="key-takeaway">
+    Use MCP when you need composability, discovery, or multi-tool agents. Use direct integration for single-purpose, performance-critical paths. Open the sandbox to evaluate scenarios against this framework.
+  </aside>
+
+  <aside class="callout">
+    <strong>Rejected alternative:</strong> A shared internal SDK wrapping all direct integrations solves code duplication but not runtime discovery: adding a new tool still requires an agent redeploy. That approach is correct when your tool set is fixed and you control both sides of every integration.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: Why MCP vs. Direct API Integration</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 5 of 7</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

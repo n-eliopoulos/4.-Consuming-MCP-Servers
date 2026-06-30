@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782856800/dILyPNTi-z74cr9Achha8w/scorm/7cc4ddc5743a3f75cafcfd7dafeeea862705b31f375ae0331e23eabe0e37c65e/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consuming MCP Servers</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Consuming MCP Servers</h1><span class="module-label">Module 2: Connecting to MCP Servers</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="35"><div class="player-progress-fill" style="width: 35%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="invoking-tools">
+  <h2>Invoking Tools</h2>
+
+  <p><code>tools/call</code> takes a tool name and arguments. Arguments must conform to the tool's <code>inputSchema</code>. The response contains <code>content</code> — an array of content blocks.</p>
+
+  <h3>Content block types</h3>
+  <ul>
+    <li><strong><code>text</code></strong> — Plain text result (most common)</li>
+    <li><strong><code>image</code></strong> — Base64-encoded image data</li>
+    <li><strong><code>resource</code></strong> — Embedded resource reference</li>
+  </ul>
+
+  <h3>Happy path</h3>
+  <pre><code>result = client.call_tool("get_stock_quote", {"ticker": "AAPL"})
+# result.content = [{"type": "text", "text": "AAPL: $187.42 (+1.2%) Vol: 52.3M"}]
+# result.isError = False</code></pre>
+
+  <h3>Error path</h3>
+  <pre><code>result = client.call_tool("get_stock_quote", {"ticker": "INVALID"})
+# result.content = [{"type": "text", "text": "Unknown ticker symbol: INVALID"}]
+# result.isError = True</code></pre>
+
+  <p>The <code>isError</code> flag distinguishes tool-side failures from successful results. Both return content. The difference is whether the tool succeeded at its task.</p>
+
+  <aside class="key-takeaway">
+    Open the sandbox to invoke tools on the market-data server. Try a valid ticker, then an invalid one. Observe how <code>isError</code> signals tool-side failures without crashing the client.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: Invoking Tools</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 4 of 8</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

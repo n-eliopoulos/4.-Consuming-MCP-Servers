@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782856800/dILyPNTi-z74cr9Achha8w/scorm/7cc4ddc5743a3f75cafcfd7dafeeea862705b31f375ae0331e23eabe0e37c65e/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consuming MCP Servers</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Consuming MCP Servers</h1><span class="module-label">Module 3: Dynamic Tool Loading</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="62"><div class="player-progress-fill" style="width: 62%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="routing-tool-calls">
+  <h2>Routing Tool Calls Back to Servers</h2>
+
+  <p>When the LLM requests a tool call, the agent must route it to the <strong>correct MCP server</strong>. The tool registry provides this mapping.</p>
+
+  <h3>The routing pattern</h3>
+  <pre><code>def handle_tool_call(tool_name, arguments, registry, clients):
+    """Route a tool call to the correct MCP server."""
+    if tool_name not in registry:
+        return {"isError": True, "content": f"Unknown tool: {tool_name}"}
+
+    server_name = registry[tool_name]["server"]
+    client = clients[server_name]
+    return client.call_tool(tool_name, arguments)</code></pre>
+
+  <h3>Multi-server conversation flow</h3>
+  <ol>
+    <li>User asks: "Check if trade T-2024-0847 complies with Rule 3110, and show me AAPL's current price"</li>
+    <li>LLM requests <code>check_compliance</code> → registry routes to <strong>compliance-docs</strong> server</li>
+    <li>LLM requests <code>get_stock_quote</code> → registry routes to <strong>market-data</strong> server</li>
+    <li>Both results feed back to the LLM for a unified response</li>
+  </ol>
+
+  <p>The LLM doesn't know or care which server owns which tool. It just calls tools by name. The agent handles the routing transparently.</p>
+
+  <aside class="key-takeaway">
+    Open the sandbox to extend the agent loop with multi-server routing. The LLM will request tools from different servers in the same conversation, and the agent routes each call correctly.
+  </aside>
+<div class="sandbox-card"><div class="sandbox-header"><strong>Exercise: Routing Tool Calls Back to Servers</strong><div class="sandbox-controls"><button type="button" class="sandbox-reset-btn" title="Restore the starter code">Reset</button><button type="button" class="sandbox-run-btn">Run</button></div></div><textarea class="sandbox-editor" spellcheck="false"></textarea><div class="sandbox-output-label">Output</div><pre class="sandbox-output" data-empty="1">(click Run to execute)</pre></div></section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 4 of 6</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>

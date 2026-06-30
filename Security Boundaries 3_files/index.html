@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://cdn5.dcbstatic.com/files/f/i/finra_docebosaas_com/1782856800/dILyPNTi-z74cr9Achha8w/scorm/7cc4ddc5743a3f75cafcfd7dafeeea862705b31f375ae0331e23eabe0e37c65e/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consuming MCP Servers</title>
+  <link rel="stylesheet" href="./prism.css">
+  <link rel="stylesheet" href="./player.css">
+</head>
+<body>
+  <div id="app" class="app" aria-live="polite"><header class="player-header"><h1>Consuming MCP Servers</h1><span class="module-label">Module 4: Security Boundaries</span><div class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="79"><div class="player-progress-fill" style="width: 79%;"></div></div></header><main class="player-content" aria-live="polite"><div><section class="slide" data-slide-id="on-behalf-of-and-token-exchange">
+  <h2>On-Behalf-Of: Identity Boundaries in MCP</h2>
+
+  <p>Most MCP servers in production at FINRA receive calls from agents that are acting <strong>on behalf of a user</strong>. The user authenticated through some front end, the agent picked up the work, and the MCP server is being called as part of that user-initiated chain. This is the dominant pattern. (Server-to-server MCP traffic for batch processing or autonomous workloads exists too — covered separately on the previous slide under mTLS, IAM roles, and API keys.)</p>
+
+  <p>For the on-behalf-of case, the server can't just trust whatever bearer token shows up; it has to verify the token, identify the user, and enforce that user's permissions for every tool call.</p>
+
+  <h3>The token chain at a glance</h3>
+  <p>For a user → agent → MCP server flow, three tokens are typically involved:</p>
+  <ol>
+    <li><strong>User OIDC token</strong> (from FIP, scope <code>openid finra_profile</code>). Identifies the user. Issued during the user's login at the front-end.</li>
+    <li><strong>Service-scoped exchanged token</strong> (from FIP, scope like <code>finra_profile ESP</code>). Issued by FIP via <strong>token exchange</strong> (RFC 8693) using the user token + an actor token from the calling service. Carries user identity but is scoped only for the target MCP server.</li>
+    <li><strong>Actor token</strong> (from FIP, client-credentials grant). Proves the calling service itself is authorized to perform a token exchange. Cached and shared across users.</li>
+  </ol>
+
+  <h3>What the MCP server has to do</h3>
+  <ul>
+    <li><strong>Verify the signature</strong> against FIP's JWKS endpoint. Never trust an unverified JWT.</li>
+    <li><strong>Check the audience claim</strong> — the token must have been issued for <em>this</em> server's scope. A token scoped for one MCP server cannot be replayed against a different server.</li>
+    <li><strong>Extract user identity and groups</strong> from token claims (or by calling FIP's userinfo endpoint with the access token).</li>
+    <li><strong>Authorize per-tool</strong> using the user's groups, not the agent's. The agent inherits user permissions; the server enforces them.</li>
+  </ul>
+
+  <h3>Why the chain matters</h3>
+  <table>
+    <tbody><tr><th>Property</th><th>Implication</th></tr>
+    <tr><td>User identity in every call</td><td>Audit log shows which user took which action via the agent.</td></tr>
+    <tr><td>Per-service scope</td><td>If the MCP server is compromised, its token cannot reach other services.</td></tr>
+    <tr><td>Independent server validation</td><td>The agent could be malicious; the MCP server still enforces correctly.</td></tr>
+    <tr><td>Per-user authorization</td><td>The user's AD groups gate every tool call; access changes when group membership changes.</td></tr>
+  </tbody></table>
+
+  <aside class="callout">
+    <strong>The full mechanics</strong> — actor tokens, the RFC 8693 exchange request shape, two-tier caching, and the per-service registration discipline — live in <em>Security, Governance &amp; Data Pipelines</em> (Track 6 Level 300, module 4: Cross-Service Identity &amp; Token Exchange) — that's the production-engineering home for token-exchange depth. The <em>Building MCP Servers</em> course (Track 4 Level 200) carries the server-side wrapping pattern with a reference callout. This slide is the conceptual foundation: <strong>tokens carry identity, scope is per-service, and the server validates everything</strong>.
+  </aside>
+
+  <aside class="key-takeaway">
+    On-behalf-of authorization is what makes user identity a first-class concept in user-facing MCP flows. Without it, a single compromised agent — or a single missing scope check — exposes everything for whichever users routed through it.
+  </aside>
+</section>
+</div></main><footer class="player-footer"><button class="btn">← Previous</button><span class="player-counter">Slide 3 of 8</span><button class="btn btn-primary">Next →</button></footer></div>
+  <script src="./scorm-api.js"></script>
+  <script src="./prism.js"></script>
+  <script src="./prism-python.js"></script>
+  <script src="./player.js"></script>
+
+
+</body></html>
